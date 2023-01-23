@@ -17,13 +17,14 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true,
     "strict": true,
     "strictPropertyInitialization": false,
     "paths": {
-      "@application/*": ["src/application/*"],
-      "@helpers/*": ["src/helpers/*"],
-      "@infra/*": ["src/infra/*"],
-      "@test/*": ["test/*"],
+      "@application/*":["./src/application/*"],
+      "@helpers/*":["./src/helpers/*"],
+      "@infra/*":["./src/infra/*"],
+      "@test/*":["./test/*"]
     }
   }
 }
