@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { NotificationsReporitory } from '../repositories/notification-repository';
+import { NotificationNotFound } from './errors/notification-not-found-error';
 
 interface CancelNotificationRequest {
   notificationId: string;
@@ -16,12 +17,16 @@ export class CancelNotification {
   ): Promise<CancelNotificationResponse> {
     const { notificationId } = request;
 
-    const foundNotification = await this.notificationsRepository.findById(
+    const notification = await this.notificationsRepository.findById(
       notificationId,
     );
 
-    if (!foundNotification) {
-      throw new NotFoundException('Notification not found');
+    if (!notification) {
+      throw new NotFoundException('Notification not found.');
     }
+
+    notification.cancel();
+
+    await this.notificationsRepository.save(notification);
   }
 }
