@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { NotificationsReporitory } from '../repositories/notification-repository';
 
 interface CountRecipientNotificationRequest {
