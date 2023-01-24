@@ -1,19 +1,14 @@
-import { NotFoundException } from '@nestjs/common';
 import { InMemoryNotificationsRepository } from '@test/repositories/in-memory-notifications-repository';
-import { Content } from '../entities/content';
-import { Notification } from '../entities/notification';
+import { makeNotification } from '@test/factories/notification-factory';
 import { CancelNotification } from './cancel-notification';
+import { NotificationNotFound } from './errors/notification-not-found-error';
 
 describe('cancel notification', () => {
   it('should be able to cancel a notification', async () => {
     const notificationsRepository = new InMemoryNotificationsRepository();
     const cancelNotification = new CancelNotification(notificationsRepository);
 
-    const newNotification = new Notification({
-      recipientId: 'recipient-id',
-      category: 'social',
-      content: new Content('this might be a notification'),
-    });
+    const newNotification = makeNotification();
 
     await notificationsRepository.create(newNotification);
 
@@ -30,6 +25,6 @@ describe('cancel notification', () => {
 
     expect(() => {
       return cancelNotification.execute({ notificationId: 'fake-id' });
-    }).rejects.toThrow(NotFoundException);
+    }).rejects.toThrow(NotificationNotFound);
   });
 });
